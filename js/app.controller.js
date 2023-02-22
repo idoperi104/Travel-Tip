@@ -1,6 +1,10 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
+export const appController = {
+    renderLocsList
+}
+
 window.onload = onInit
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
@@ -13,6 +17,7 @@ function onInit() {
             console.log('Map is ready')
         })
         .then(renderLocsList)
+        .then(renderMarkers)
         .catch(() => console.log('Error: cannot init map'))
 }
 
@@ -28,8 +33,9 @@ function getPosition() {
 function renderLocsList() {
     locService.query()
         .then(locs => {
+            console.log("locs: ", locs);
             const strHtml = locs.map(loc => {
-                return `<div>
+                return `<div class="loc-preview">
                 <h2>${loc.name}</h2>
                 <p>Created at: ${new Date(loc.createdAt)}</p>
                 <button onclick="onPanTo(${loc.lat}, ${loc.lng})">Go</button>
@@ -41,16 +47,24 @@ function renderLocsList() {
         })
 }
 
+function renderMarkers() {
+    locService.query()
+        .then(locs => {
+            let markers = mapService.getMarkers()
+            markers.forEach(marker => marker.setMap(null))
+            markers = locs.map(loc => mapService.addMarker({ lat: loc.lat, lng: loc.lng }, loc.name))
+            mapService.setMarkers(markers)
+        })
+}
+
 function onRemoveMarker(locId) {
-   locService.remove(locId).then(renderLocsList)
+    locService.remove(locId)
+    .then(renderLocsList)
+    .then(renderMarkers)
 }
 
 function onGetLocs() {
     locService.query()
-        .then(locs => {
-            console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
-        })
         .then(renderLocsList)
 }
 

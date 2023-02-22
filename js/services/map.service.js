@@ -1,13 +1,17 @@
 import { locService } from './loc.service.js'
+import { appController } from '../app.controller.js'
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    getMarkers,
+    setMarkers
 }
 
 
 // Var that is used throughout this Module (not global)
 var gMap
+var gMarkers = []
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap')
@@ -19,27 +23,35 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 center: { lat, lng },
                 zoom: 15
             })
-
             gMap.addListener("click", (ev) => {
                 const lat = ev.latLng.lat()
                 const lng = ev.latLng.lng()
                 const name = prompt('what is the name of this place?')
-                addMarker({ lat, lng })
+                const marker = addMarker({ lat, lng }, name)
+                gMarkers.push(marker)
                 locService.save(name, lat, lng)
+                    .then(appController.renderLocsList)
                 // info window - google maps
             })
-
             console.log('Map!', gMap)
         })
 }
 
-function addMarker(loc) {
+function addMarker(loc, title) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: 'Hello World!'
+        title
     })
     return marker
+}
+
+function getMarkers() {
+    return gMarkers
+}
+
+function setMarkers(markers) {
+    gMarkers = markers
 }
 
 function panTo(lat, lng) {

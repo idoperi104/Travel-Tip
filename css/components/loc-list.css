@@ -1,0 +1,9 @@
+.loc-list{
+}
+
+.loc-list .loc-preview {
+    box-shadow: 0 0 1px black;
+    border-radius: 10px;
+    margin-bottom: 8px;
+
+}

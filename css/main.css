@@ -10,7 +10,9 @@
 /* @import 'basics/helpers.css'; */
 
 /* COMPONENTS */
-/* @import 'components/header.css'; */
+@import 'components/header.css';
+@import 'components/curr-loc.css';
+@import 'components/loc-list.css';
 /* @import 'components/vids-list.css'; */
 /* @import 'components/wik-list.css'; */
 /* @import 'components/logo.css'; */
