@@ -7,7 +7,6 @@ export const appController = {
 
 window.onload = onInit
 window.onPanTo = onPanTo
-window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onRemoveMarker = onRemoveMarker
 
@@ -28,7 +27,6 @@ function getPosition() {
         navigator.geolocation.getCurrentPosition(resolve, reject)
     })
 }
-
 
 function renderLocsList() {
     locService.query()
@@ -63,11 +61,6 @@ function onRemoveMarker(locId) {
     .then(renderMarkers)
 }
 
-function onGetLocs() {
-    locService.query()
-        .then(renderLocsList)
-}
-
 function onGetUserPos() {
     getPosition()
         .then(pos => {
@@ -79,6 +72,7 @@ function onGetUserPos() {
             console.log('err!!!', err)
         })
 }
+
 function onPanTo(lat, lng) {
     mapService.panTo(lat, lng)
 }

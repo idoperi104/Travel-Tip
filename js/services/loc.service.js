@@ -24,9 +24,8 @@ function query() {
         })
 }
 
-
 function save(name, lat, lng) {
-    const loc =_createLoc(name, lat, lng)
+    const loc = _createLoc(name, lat, lng)
     if (loc.id) {
         return storageService.put(LOC_KEY, loc)
     } else {
@@ -45,20 +44,22 @@ function get(locId) {
 function _createDemoLocs() {
     const locNames = ['Bob', 'Charls', 'Chip']
 
-    const locs = locNames.map((locName, i) => {
+    const locs = locNames.map(locName => {
         const loc = _createLoc(locName)
+        loc.id = utilService.makeId()
         return loc
     })
-
     utilService.saveToStorage(LOC_KEY, locs)
 }
 
 function _createLoc(name, lat, lng) {
     const loc = {}
+    // loc.id = utilService.makeId()
     loc.name = name || utilService.randomLocName(loc.type)
     loc.lat = lat || utilService.randomLoc()
     loc.lng = lng || utilService.randomLoc()
     loc.createdAt = Date.now()
+    console.log("loc down ", loc);
     return loc
 }
 
