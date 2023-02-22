@@ -57,8 +57,8 @@ function renderMarkers() {
 
 function onRemoveMarker(locId) {
     locService.remove(locId)
-    .then(renderLocsList)
-    .then(renderMarkers)
+        .then(renderLocsList)
+        .then(renderMarkers)
 }
 
 function onGetUserPos() {
@@ -67,7 +67,17 @@ function onGetUserPos() {
             console.log('User position is:', pos.coords)
             document.querySelector('.user-pos').innerText =
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+            return { lng: pos.coords.longitude, lat: pos.coords.latitude }
         })
+        .then(({ lat, lng }) => {
+            const name = 'My Location'
+            const marker = mapService.addMarker({ lat, lng }, name)
+            mapService.setMarkers(mapService.getMarkers().push(marker))
+            locService.save(name, lat, lng)
+                .then(renderLocsList)
+            return {lat, lng}
+        })
+        .then(({lat, lng}) => onPanTo(lat, lng))
         .catch(err => {
             console.log('err!!!', err)
         })
