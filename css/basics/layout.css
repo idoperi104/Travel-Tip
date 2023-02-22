@@ -1,0 +1,38 @@
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 7fr 10fr;
+    grid-template-rows: 2fr 2fr 4fr 5fr;
+    grid-template-areas: 
+    "header header"
+    "loc loc"
+    "w map"
+    "loc-list map";
+}
+
+.main-header{
+    grid-area: header;
+    background-color: aliceblue;
+}
+
+.curr-loc{
+    grid-area: loc;
+    background-color: rgb(163, 181, 198);
+}
+
+.map{
+    grid-area: map;
+    background-color: rgb(140, 213, 180);
+}
+
+.weather{
+    grid-area: w;
+    background-color: rgb(220, 233, 176);
+}
+
+.loc-list{
+    grid-area: loc-list;
+    background-color: rgb(216, 172, 228);
+}
+
+

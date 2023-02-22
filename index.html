@@ -3,20 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
     <title>TravelTip</title>
 </head>
-<body>
-    <h1>TravelTip Starter</h1>
-    <div id="map" style="width: 100%; height: 400px;"></div>
-    <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
-    <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
-    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-    <button onclick="onPanTo()"class="btn-pan">Pan Map to Tokyo</button>
+<body class="main-layout">
+    <header class="main-header">
+        <h1 class="logo">TravelTip</h1>
 
-    <p>You are at: <span class="user-pos"></span></p>
+        <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
+    </header>
+
+    <section class="curr-loc">
+        <p>You are at: <span class="user-pos"></span></p>
+        <button class="btn-copy-loc">copy location</button>
+    </section>
+
+    <div class="map" id="map" style="width: 100%; height: 400px;"></div>
+    <!-- <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button> -->
+    
+    <article class="weather">weather today</article>
+
+    <section class="loc-list">Locations Table</section>
+
+    <!-- <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
+    <button onclick="onPanTo()"class="btn-pan">Pan Map to Tokyo</button>
+    
     <p>Locations: 
         <pre class="locs"></pre>
-    </p>
+    </p> -->
     
 
     <script type="module" src="js/app.controller.js"></script>
