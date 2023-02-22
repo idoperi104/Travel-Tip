@@ -11,8 +11,8 @@
 <body class="main-layout">
     <header class="main-header">
         <h1 class="logo">TravelTip</h1>
-        <form onsubmit="">
-            <input type="text" placeholder="Enter location">
+        <form onsubmit="onSearch(event)">
+            <input class="search-input" type="text" placeholder="Enter location">
             <button>GO</button>
         </form>
         <button onclick="onGetUserPos()" class="btn-user-pos">My Place</button>
@@ -29,6 +29,9 @@
 
     <section class="loc-list">Locations Table</section>
 
+
+
+    <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
 </body>
 

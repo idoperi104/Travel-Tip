@@ -9,6 +9,7 @@ window.onload = onInit
 window.onPanTo = onPanTo
 window.onGetUserPos = onGetUserPos
 window.onRemoveMarker = onRemoveMarker
+window.onSearch = onSearch
 
 function onInit() {
     mapService.initMap()
@@ -17,6 +18,7 @@ function onInit() {
         })
         .then(renderLocsList)
         .then(renderMarkers)
+        .then(onGetUserPos)
         .catch(() => console.log('Error: cannot init map'))
 }
 
@@ -72,7 +74,7 @@ function onGetUserPos() {
         .then(({ lat, lng }) => {
             const name = 'My Location'
             const marker = mapService.addMarker({ lat, lng }, name)
-            mapService.setMarkers(mapService.getMarkers().push(marker))
+            mapService.getMarkers().push(marker)
             locService.save(name, lat, lng)
                 .then(renderLocsList)
             return {lat, lng}
@@ -85,4 +87,15 @@ function onGetUserPos() {
 
 function onPanTo(lat, lng) {
     mapService.panTo(lat, lng)
+}
+
+function onSearch(ev){
+    ev.preventDefault()
+    var elInput = document.querySelector('.search-input')
+    var locName = elInput.value
+    elInput.value = ''
+
+    mapService.getAddressLoc(locName)
+
+
 }

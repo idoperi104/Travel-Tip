@@ -17,9 +17,8 @@ function query() {
             //     const regex = new RegExp(gFilterBy.txt, 'i')
             //     locs = locs.filter(pet => regex.test(pet.name))
             // }
-            // if (gFilterBy.minScore) {
-            //     locs = locs.filter(pet => pet.score >= gFilterBy.minScore)
-            // }
+            locs.sort((p1, p2) =>
+                (p1.createdAt < p2.createdAt) ? 1 : -1);
             return locs
         })
 }
@@ -69,8 +68,6 @@ function _createLocs() {
         _createDemoLocs()
     }
 }
-
-
 
 // var gFilterBy = { txt: '', minScore: 0 }
 // _createPets()

@@ -5,7 +5,8 @@ export const mapService = {
     addMarker,
     panTo,
     getMarkers,
-    setMarkers
+    setMarkers,
+    getAddressLoc,
 }
 
 
@@ -72,4 +73,21 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
+}
+
+function getAddressLoc(address) {
+    var geocoder = new google.maps.Geocoder()
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status == 'OK') {
+            panTo(results[0].geometry.location)
+            const marker = addMarker(results[0].geometry.location, address)
+            const {lat, lng} = results[0].geometry.location
+            locService.save(address, lat(), lng())
+                .then(appController.renderLocsList)
+
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+
 }
